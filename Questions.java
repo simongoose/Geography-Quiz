@@ -8,21 +8,27 @@ import java.util.HashMap;   // import the hashmap class
  */
 public class Questions
 {
+    // fields
+    int[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
+    
+    // create hashmaps
+    HashMap<String, String> easyQuestions = 
+            new HashMap<String, String>();
+    HashMap<String, String> mediumQuestions = 
+            new HashMap<String, String>();
+    HashMap<String, String> hardQuestions = 
+            new HashMap<String, String>();
+    HashMap<String, String> expertQuestions = 
+            new HashMap<String, String>();
+    
     /**
      * Constructor for objects of class Questions
+     * 
+     * Creates 4 hashmaps for the 4 difficulties of questions
+     * Stores all questions in (country, capital) format
      */
     public Questions()
-    {
-        // create hashmaps
-        HashMap<String, String> easyQuestions = 
-            new HashMap<String, String>();
-        HashMap<String, String> mediumQuestions = 
-            new HashMap<String, String>();
-        HashMap<String, String> hardQuestions = 
-            new HashMap<String, String>();
-        HashMap<String, String> expertQuestions = 
-            new HashMap<String, String>();
-            
+    { 
         // add keys and values (country, capital)
         // easy questions
         easyQuestions.put("Argentina", "Buenos Aires");
@@ -227,5 +233,22 @@ public class Questions
         expertQuestions.put("Vanuatu", "Port Vila");
         expertQuestions.put("Zambia", "Lusaka");
         expertQuestions.put("Zimbabwe", "Harare");
+    }
+    
+    /**
+     * Returns the desired hashmap
+     * 
+     * @return HashMap - the hashmap for the desired difficulty
+     */
+    public HashMap getQuestions(int difficulty) {
+        if (difficulty == difficulties[0]) {
+            return easyQuestions;
+        } else if (difficulty == difficulties[1]) {
+            return mediumQuestions;
+        } else if (difficulty == difficulties[2]) {
+            return hardQuestions;
+        } else {
+            return expertQuestions;
+        }
     }
 }
