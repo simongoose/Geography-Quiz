@@ -12,12 +12,18 @@ import java.awt.Color;      // import the color class
 public class Quiz
 {
     // fields
-    HashMap<String, String> askedQuestions = 
+    private HashMap<String, String> askedQuestions = 
         new HashMap<String, String>();  // stores already asked questions
-    HashMap<String, String> questions;  // stores all questions for the round
+    private HashMap<String, String> questions;  // stores all questions for the round
     
-    String[] countries; // stores all countries in the difficulty
-    String[] qanda; // stores the current question and answer
+    private String[] qanda; // stores the current question and answer
+    
+    private String currentCountry;  // stores the current country
+    private String currentCapital;  // stores the current capital
+    
+    private int amt;    // the amount of questions left to be asked
+    private int score;  // users score
+    private int lives;  // users lives
     
     Questions qs = new Questions();
     
@@ -41,21 +47,34 @@ public class Quiz
      * Chooses the question from the selected hashmap
      */
     private void chooseQuestion() {
-        int amt = questions.size();   // get the length of hashmap
+        amt = questions.size();   // get the length of hashmap
         int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
         
-        for (int i = 0; i <= choiceIdx; i++) {
-            
-        }
+        currentCountry = questions.get(choiceIdx);   // choose the random country
+        currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
     }
     
     /**
      * Checks if a question has already been asked
      */
+    private void checkRepeat() {
+        while (questions.containsKey(currentCountry) || amt != 0) {
+            chooseQuestion();   // if the randomly chosen question has been asked generate the next question
+        }
+        amt--;
+    }
     
+    /**
+     * Generates the 3 other multichoice answers
+     */
+    private void otherAnswers() {
+        
+    }
     
     /**
      * Calculates user score and lives
      */
-    
+    private void scoreCalculator() {
+        
+    }
 }

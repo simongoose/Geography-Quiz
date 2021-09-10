@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Gui
+comment0.text=\r\n\ GUI\ class\r\n\ Contains\ all\ methods\ which\ display\ the\ quiz\ including\r\n\ buttons,\ drop\ down\ menus\ and\ things\ on\ graphics\ and\ text\ panes\r\n\r\n\ @author\ Simon\ Lee\r\n\ @version\ 09/09/2021\r\n
+comment1.params=
+comment1.target=Gui()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Gui\r\n
+numComments=2
