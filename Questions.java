@@ -9,16 +9,16 @@ import java.util.HashMap;   // import the hashmap class
 public class Questions
 {
     // fields
-    int[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
+    private double[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
     
     // create hashmaps
-    HashMap<String, String> easyQuestions = 
+    private HashMap<String, String> easyQuestions = 
             new HashMap<String, String>();
-    HashMap<String, String> mediumQuestions = 
+    private HashMap<String, String> mediumQuestions = 
             new HashMap<String, String>();
-    HashMap<String, String> hardQuestions = 
+    private HashMap<String, String> hardQuestions = 
             new HashMap<String, String>();
-    HashMap<String, String> expertQuestions = 
+    private HashMap<String, String> expertQuestions = 
             new HashMap<String, String>();
     
     /**
@@ -240,7 +240,7 @@ public class Questions
      * 
      * @return HashMap - the hashmap for the desired difficulty
      */
-    public HashMap getQuestions(int difficulty) {
+    public HashMap getQuestions(double difficulty) {
         if (difficulty == difficulties[0]) {
             return easyQuestions;
         } else if (difficulty == difficulties[1]) {

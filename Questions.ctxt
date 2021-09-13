@@ -5,6 +5,6 @@ comment1.params=
 comment1.target=Questions()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Questions\r\n\ \r\n\ Creates\ 4\ hashmaps\ for\ the\ 4\ difficulties\ of\ questions\r\n\ Stores\ all\ questions\ in\ (country,\ capital)\ format\r\n
 comment2.params=difficulty
-comment2.target=java.util.HashMap\ getQuestions(int)
+comment2.target=java.util.HashMap\ getQuestions(double)
 comment2.text=\r\n\ Returns\ the\ desired\ hashmap\r\n\ \r\n\ @return\ HashMap\ -\ the\ hashmap\ for\ the\ desired\ difficulty\r\n
 numComments=3

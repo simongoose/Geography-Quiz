@@ -15,15 +15,20 @@ public class Quiz
     private HashMap<String, String> askedQuestions = 
         new HashMap<String, String>();  // stores already asked questions
     private HashMap<String, String> questions;  // stores all questions for the round
+    private HashMap<String, String> otherAnswers =
+        new HashMap<String, String>();  // stores countries/capitals to be used in the multichoice answers
     
     private String[] qanda; // stores the current question and answer
     
     private String currentCountry;  // stores the current country
     private String currentCapital;  // stores the current capital
+    private String otherCountry;   // stores the other country as an answer option
+    private String otherCapital;   // stores the other capital as an answer option
     
     private int amt;    // the amount of questions left to be asked
     private int score;  // users score
     private int lives;  // users lives
+    private final int OTHERAMT = 3;     // amount of other possible answers
     
     Questions qs = new Questions();
     
@@ -39,36 +44,76 @@ public class Quiz
      * 
      * @return HashMap of the questions for the round
      */
-    private void getQs(int difficulty) {
+    public void getQs(double difficulty) {
+        // reset the question information for the new round
+        questions.clear();
+        
+        // get the new questions
         questions = qs.getQuestions(difficulty);
     }
     
     /**
      * Chooses the question from the selected hashmap
      */
-    private void chooseQuestion() {
+    public void chooseQuestion() {
         amt = questions.size();   // get the length of hashmap
         int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
+        
+        while (askedQuestions.containsKey(currentCountry) || amt != 0) {
+            chooseQuestion();   // if the randomly chosen question has been asked generate the next question
+        }
+        amt--;  // take one away from amount of questions left
         
         currentCountry = questions.get(choiceIdx);   // choose the random country
         currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
     }
     
     /**
-     * Checks if a question has already been asked
+     * Return country
      */
-    private void checkRepeat() {
-        while (questions.containsKey(currentCountry) || amt != 0) {
-            chooseQuestion();   // if the randomly chosen question has been asked generate the next question
-        }
-        amt--;
+    public String getCountry() {
+        return currentCountry;
+    }
+    
+    /**
+     * Return capital
+     */
+    public String getCapital() {
+        return currentCapital;
+    }
+    
+    /**
+     * Return other answers
+     */
+    public HashMap getOtherAnswers() {
+        return otherAnswers;
+    }
+    
+    /**
+     * Reset the hashmap for the other answers
+     */
+    public void resetAnswers() {
+        otherAnswers.clear();
     }
     
     /**
      * Generates the 3 other multichoice answers
      */
-    private void otherAnswers() {
-        
+    public void otherAnswers() {
+        // run this code 3 times to get 3 other answers
+        for (int i = 0; i <= OTHERAMT; i++) {
+            int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
+            
+            while (otherAnswers.containsKey(currentCountry)) {
+                chooseQuestion();   // if the randomly chosen question has been asked generate the next question
+            }
+            
+            otherCountry = questions.get(choiceIdx);   // choose the random country
+            otherCapital = questions.get(currentCountry);  // get the capital of the chosen country
+            
+            // add other options to hashmap for current question
+            otherAnswers.put(otherCountry, otherCapital);
+        }
     }
     
     /**
