@@ -26,8 +26,10 @@ public class Questions
      * 
      * Creates 4 hashmaps for the 4 difficulties of questions
      * Stores all questions in (country, capital) format
+     * 
+     * @param something
      */
-    public Questions()
+    public Questions(String something)
     { 
         // add keys and values (country, capital)
         // easy questions
@@ -240,12 +242,12 @@ public class Questions
      * 
      * @return HashMap - the hashmap for the desired difficulty
      */
-    public HashMap getQuestions(double difficulty) {
-        if (difficulty == difficulties[0]) {
+    public HashMap getQuestions(String difficulty) {
+        if (difficulty.equalsIgnoreCase("easy")) {
             return easyQuestions;
-        } else if (difficulty == difficulties[1]) {
+        } else if (difficulty.equalsIgnoreCase("medium")) {
             return mediumQuestions;
-        } else if (difficulty == difficulties[2]) {
+        } else if (difficulty.equalsIgnoreCase("hard")) {
             return hardQuestions;
         } else {
             return expertQuestions;
