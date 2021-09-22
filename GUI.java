@@ -14,12 +14,12 @@ public class GUI
 {   
     // fields
     Quiz qz = new Quiz(1);
-    Difficulty df = new Difficulty();
     
     private String question;    // the question to be asked
     private String realAnswer;  // the real answer to the question
     private int amount;         // the amount of questions to be asked
     private String diff;        // difficulty of the quiz
+    private boolean broken;     // if difficulty has been selected or not
     
     private int[] keys = {1, 2, 3, 4};  // keys to the answers
     
@@ -35,7 +35,6 @@ public class GUI
         UI.addButton("Play", this::playGame);
         UI.addButton("Statistics", this::showStats);
         UI.addButton("Information", this::showInfo);
-        UI.addButton("Difficulty", this::setDifficulty);
         UI.addButton("Quit", UI::quit);
     }
     
@@ -43,15 +42,14 @@ public class GUI
      * Runs the game
      */
     private void playGame() {
-        this.getDifficulty();   // get the difficulty
+        askDifficulty(true);
         qz.getQs(diff);         // get the questions
         amount = qz.getAmount();    // store the amount of questions
         
-        while (amount != 0) {
-            this.getQuestion();
-            this.showQuestion();
+        this.getQuestion();
+        this.showQuestion();
         }
-    }
+    
     
     /**
      * Gets the question for the round
@@ -60,6 +58,8 @@ public class GUI
         qz.chooseQuestion();    // choose the question to be asked
         question = qz.getCountry();  // store the question
         realAnswer = qz.getCapital();   // store the real answer
+        qz.otherAnswers();  // generate the answers
+        qz.assignAnswerKey();   // store the answers with their keys
         answers = qz.getAnswers();    // store the other answers
     }
     
@@ -67,11 +67,18 @@ public class GUI
      * Displays the question and choices on the graphics pane
      */
     private void showQuestion() {
-        int answerIdx = 0;
+        int answerIdx = 0;  // reset answer index
         
+        // ask the questions
         UI.println("What is the capital of " + question + "?");
         for (int i = 1; i <= 4; i++) {
-            UI.println(keys[answerIdx] + ") " + answers.get(i));
+            UI.println(i + ") " + answers.get(i - 1));
+        }
+        
+        // obtain the users answer
+        int userNum = UI.askInt("Enter number: ");
+        while (!keys.contains(userNum)) {
+            userNum = UI.askInt("Enter number: ");
         }
     }
     
@@ -90,18 +97,19 @@ public class GUI
     }
     
     /**
-     * Changes the difficulty
+     * Asks user for the difficulty
      */
-    private void setDifficulty() {
-        // select the difficulty
-        df.difficulty();
-    }
-    
-    /**
-     * Gets the difficulty
-     */
-    private void getDifficulty() {
-        diff = df.returnDiff();
+    private void askDifficulty(boolean allowed) {
+        while (allowed) {
+            // ask difficulty
+            UI.println("Choose difficulty:");
+            UI.println("1) Easy");
+            UI.println("2) Medium");
+            UI.println("3) Hard");
+            UI.println("4) Expert");
+            double diffIdx = UI.askDouble("Enter number: ");
+            allowed = qz.setDifficulty(diffIdx);
+        }
     }
     
     /**

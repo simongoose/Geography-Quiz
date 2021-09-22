@@ -242,12 +242,12 @@ public class Questions
      * 
      * @return HashMap - the hashmap for the desired difficulty
      */
-    public HashMap getQuestions(String difficulty) {
-        if (difficulty.equalsIgnoreCase("easy")) {
+    public HashMap getQuestions(double difficulty) {
+        if (difficulty == difficulties[0]) {
             return easyQuestions;
-        } else if (difficulty.equalsIgnoreCase("medium")) {
+        } else if (difficulty == difficulties[1]) {
             return mediumQuestions;
-        } else if (difficulty.equalsIgnoreCase("hard")) {
+        } else if (difficulty == difficulties[2]) {
             return hardQuestions;
         } else {
             return expertQuestions;

@@ -1,5 +1,6 @@
 import ecs100.*;    // import ecs100 library
 import java.util.HashMap;   // import the hashmap class
+import java.util.ArrayList;    // import the arraylist class
 import java.util.Arrays;    // import the arrays class
 import java.awt.Color;      // import the color class
 /**
@@ -21,6 +22,7 @@ public class Quiz
         new HashMap<Integer, String>();  // the answer key
         
     private double diff;    // difficulty of the quiz
+    private double[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
     
     private String currentCountry;  // stores the current country
     private String currentCapital;  // stores the current capital
@@ -28,8 +30,10 @@ public class Quiz
     private String otherCapital;   // stores the other capital as an answer option
     
     private String[] otherAnswers;  // stores the other possible answers
+    private ArrayList<String> countries;     // stores all countries
     
-    private int amt;    // the amount of questions left to be asked
+    private int amtLeft;    // the amount of questions left to be asked
+    private int amt;
     private int score;  // users score
     private int lives;  // users lives
     private final int OTHERAMT = 3;     // amount of other possible answers
@@ -59,25 +63,51 @@ public class Quiz
         currentAnswerKey = 1;
         
         // get the new questions
-        questions = qs.getQuestions(difficulty);
+        questions = qs.getQuestions(diff);
         amt = questions.size();   // get the length of hashmap
+        amtLeft = amt;  // set amount left to amount
+        countries = new ArrayList<String>();    // declare arraylist
+        
+        // store countries in array
+        for (String country : questions.keySet()) {
+            countries.add(country);
+        }
     }
     
     /**
      * Chooses the question from the selected hashmap
      */
     public void chooseQuestion() {
-        boolean first = false;
         int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
-        
-        while ((askedQuestions.containsKey(currentCountry) && first) || amt != 0 ) {
+
+        while ((askedQuestions.containsKey(currentCountry)) && amtLeft != 0 ) {
             choiceIdx = (int) (Math.random() * amt);  // randomly choose the question again
-            first = true;
+            amtLeft--;
         }
-        amt--;  // take one away from amount of questions left
         
-        currentCountry = questions.get(choiceIdx);   // choose the random country
+        currentCountry = countries.get(choiceIdx);   // choose the random country
         currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
+    }
+    
+    /**
+     * Set the difficulty
+     */
+    public boolean setDifficulty(double diffIdx) {
+        if (diffIdx == difficulties[0]){
+            diff = diffIdx;
+            return false;
+        } else if (diffIdx == difficulties[1]){
+            diff = diffIdx;
+            return false;
+        } else if (diffIdx == difficulties[2]){
+            diff = diffIdx;
+            return false;
+        } else if (diffIdx == difficulties[3]){
+            diff = diffIdx;
+            return false;
+        } else {
+            return true;
+        }
     }
     
     /**
@@ -105,7 +135,7 @@ public class Quiz
      * Return amount of questions
      */
     public int getAmount() {
-        return amt;
+        return amtLeft;
     }
     
     /**
@@ -119,17 +149,17 @@ public class Quiz
      * Generates the 3 other multichoice answers
      */
     public void otherAnswers() {
-        int answerIdx = 0;
+        int answerIdx = 0;  // reset answer index
+        otherAnswers = new String[OTHERAMT];   // reset other answers array
         
         // run this code 3 times to get 3 other answers
-        for (int i = 0; i <= OTHERAMT; i++) {
+        for (int i = 0; i < OTHERAMT; i++) {
             int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             
-            while (Arrays.asList(otherAnswers).contains(currentCountry)) {
-                chooseQuestion();   // if the randomly chosen question has been asked generate the next question
+            while (Arrays.asList(otherAnswers).contains(currentCountry) || Arrays.asList(otherAnswers).contains(countries.get(choiceIdx))) {
+                choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             }
-            
-            otherCountry = questions.get(choiceIdx);   // choose the random country
+            otherCountry = countries.get(choiceIdx);   // choose the random country
             otherCapital = questions.get(otherCountry);  // get the capital of the chosen country
             
             // add other options to hashmap for current question
@@ -144,13 +174,14 @@ public class Quiz
     public void assignAnswerKey() {
         int answerIdx = 0;
         
+        // add the current capital to the answer key
+        currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
+        answerKey.put(currentAnswerKey, currentCapital);   
+        
         // run as long as hashmap isnt full
-        while (answerKey.size() <= FULLKEY) {
+        while (answerKey.size() < FULLKEY) {
             currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
-            if (answerKey.containsValue(currentCapital) && !answerKey.containsKey(currentAnswerKey)) {
-                // add to hashmap if not in already
-                answerKey.put(currentAnswerKey, currentCapital);
-            } else if (!answerKey.containsKey(currentAnswerKey)) {
+            if (!answerKey.containsKey(currentAnswerKey) && answerIdx < OTHERAMT) {
                 answerKey.put(currentAnswerKey, otherAnswers[answerIdx]);
                 answerIdx++;
             }
