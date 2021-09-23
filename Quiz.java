@@ -36,8 +36,11 @@ public class Quiz
     private int amt;
     private int score;  // users score
     private int lives;  // users lives
+    private int correctIdx;     // index of correct answer
+    
     private final int OTHERAMT = 3;     // amount of other possible answers
     private int currentAnswerKey;   // the current answer key
+    private int correctAnswerKey;    // the correct answer key
     private final int FULLKEY = 4;      // the maximum amount of answers
     
     Questions qs = new Questions("something");
@@ -49,6 +52,10 @@ public class Quiz
      */
     public Quiz(double difficulty) {
         this.diff = difficulty;
+        
+        // reset scores and lives
+        lives = 3;
+        score = 0;
     }
     
     /**
@@ -79,14 +86,20 @@ public class Quiz
      */
     public void chooseQuestion() {
         int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
-
-        while ((askedQuestions.containsKey(currentCountry)) && amtLeft != 0 ) {
-            choiceIdx = (int) (Math.random() * amt);  // randomly choose the question again
-            amtLeft--;
+        
+        // check if index has already been used
+        if (amtLeft != 0) {
+            while ((askedQuestions.containsKey(currentCountry))){
+                choiceIdx = (int) (Math.random() * amt);  // randomly choose the question again
+            }
         }
+        
+        amtLeft--;
+        correctIdx = choiceIdx;
         
         currentCountry = countries.get(choiceIdx);   // choose the random country
         currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
+        askedQuestions.put(currentCountry, currentCapital); // add them to the asked questions hashmap
     }
     
     /**
@@ -139,6 +152,20 @@ public class Quiz
     }
     
     /**
+     * Return lives
+     */
+    public int getLives() {
+        return lives;
+    }
+    
+    /**
+     * Return score
+     */
+    public int getScore() {
+        return score;
+    }
+    
+    /**
      * Reset the array for the other answers
      */
     public void resetAnswers() {
@@ -156,7 +183,7 @@ public class Quiz
         for (int i = 0; i < OTHERAMT; i++) {
             int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             
-            while (Arrays.asList(otherAnswers).contains(currentCountry) || Arrays.asList(otherAnswers).contains(countries.get(choiceIdx))) {
+            while (Arrays.asList(otherAnswers).contains(countries.get(choiceIdx)) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry)) {
                 choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             }
             otherCountry = countries.get(choiceIdx);   // choose the random country
@@ -177,6 +204,7 @@ public class Quiz
         // add the current capital to the answer key
         currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
         answerKey.put(currentAnswerKey, currentCapital);   
+        correctAnswerKey = currentAnswerKey;    // get the correct answer and its key
         
         // run as long as hashmap isnt full
         while (answerKey.size() < FULLKEY) {
@@ -191,7 +219,16 @@ public class Quiz
     /**
      * Calculates user score and lives
      */
-    private void scoreCalculator() {
-        
+    public boolean scoreCalculator(int userAnswer) {
+        // check if users answer is correct or not
+        if ((userAnswer - 1) == correctAnswerKey) {
+            // if correct add 1 to score and return true
+            score++;
+            return true;
+        } else {
+            // if wrong take 1 life and return false
+            lives--;
+            return false;
+        }
     }
 }
