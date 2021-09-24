@@ -89,7 +89,7 @@ public class Quiz
         
         // check if index has already been used
         if (amtLeft != 0) {
-            while ((askedQuestions.containsKey(currentCountry))){
+            while ((askedQuestions.containsKey(countries.get(choiceIdx)))){
                 choiceIdx = (int) (Math.random() * amt);  // randomly choose the question again
             }
         }
@@ -182,8 +182,8 @@ public class Quiz
         // run this code 3 times to get 3 other answers
         for (int i = 0; i < OTHERAMT; i++) {
             int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
-            
-            while (Arrays.asList(otherAnswers).contains(countries.get(choiceIdx)) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry)) {
+
+            while (Arrays.asList(otherAnswers).contains(questions.get(countries.get(choiceIdx))) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry)) {
                 choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             }
             otherCountry = countries.get(choiceIdx);   // choose the random country

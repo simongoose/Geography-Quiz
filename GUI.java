@@ -22,7 +22,6 @@ public class GUI
     private int score = 0;          // user score
     private int lives = 3;          // user lives
     private String diff;        // difficulty of the quiz
-    private boolean broken;     // if difficulty has been selected or not
     private boolean correct;    // if answer is correct or not
     
     private double qAsked;         // no of questions asked
@@ -160,14 +159,18 @@ public class GUI
      * Displays statistics
      */
     private void showStats() {
-        UI.println();   // line break
+        UI.println();   // line break and clear text pane
+        UI.clearText();
         
         // print stats
         UI.println("Questions asked: " + qAsked);
         UI.println("Questions correct: " + qCorrect);
         UI.println("Questions wrong: " + (qAsked - qCorrect));
+        
+        // print percentage correct
         double percentage = (qCorrect/qAsked) * 100;
-        UI.println("Percentage correct: " + (percentage * 100.0)/100.0 + "%");
+        String percentRounded = String.format("%.02f", percentage);
+        UI.println("Percentage correct: " + percentRounded + "%");
     }
     
     /**
@@ -190,6 +193,11 @@ public class GUI
      * Displays game information
      */
     private void showInfo() {
-        
+        UI.println("To start the game press Play Game.");
+        UI.println("You can then select the difficulty, and the game will start.");
+        UI.println("Each game you have 3 lives, which are taken away when you get a question wrong.");
+        UI.println("You get one point for every right answer.");
+        UI.println("When you run out of lives, the game ends.");
+        UI.println("The game also ends if you have finished the difficulty (answered all questions).");
     }
 }

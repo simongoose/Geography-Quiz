@@ -45,7 +45,7 @@ public class Questions
         easyQuestions.put("Denmark", "Copenhagen");
         easyQuestions.put("Egypt", "Cairo");
         easyQuestions.put("France", "Paris");
-        easyQuestions.put("Germany", "Paris");
+        easyQuestions.put("Germany", "Berlin");
         easyQuestions.put("Greece", "Athens");
         easyQuestions.put("Hungary", "Budapest");
         easyQuestions.put("India", "New Delhi");
@@ -179,7 +179,7 @@ public class Questions
         hardQuestions.put("Sri Lanka", "Colombo/Sri Jayawardenepura Kotte");
         hardQuestions.put("Sudan", "Khartoum");
         hardQuestions.put("Syria", "Damascus");
-        hardQuestions.put("Tanzania", "Damascus");
+        hardQuestions.put("Tanzania", "Dodoma");
         hardQuestions.put("Tonga", "Nuku'alofa");
         hardQuestions.put("Trinidad and Tobago", "Port of Spain");
         hardQuestions.put("Turkmenistan", "Ashgabat");
