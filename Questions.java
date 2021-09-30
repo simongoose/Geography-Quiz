@@ -1,4 +1,5 @@
 import java.util.HashMap;   // import the hashmap class
+import ecs100.*;    // import ecs100 library
 /**
  * Creates questions in hashmaps based on difficulty
  * Returns questions to be asked to the user
@@ -12,13 +13,13 @@ public class Questions
     private double[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
     
     // create hashmaps
-    private HashMap<String, String> easyQuestions = 
+    private static HashMap<String, String> easyQuestions = 
             new HashMap<String, String>();
-    private HashMap<String, String> mediumQuestions = 
+    private static HashMap<String, String> mediumQuestions = 
             new HashMap<String, String>();
-    private HashMap<String, String> hardQuestions = 
+    private static HashMap<String, String> hardQuestions = 
             new HashMap<String, String>();
-    private HashMap<String, String> expertQuestions = 
+    private static HashMap<String, String> expertQuestions = 
             new HashMap<String, String>();
     
     /**
@@ -43,6 +44,7 @@ public class Questions
         easyQuestions.put("China", "Beijing");
         easyQuestions.put("Czech Republic", "Prague");
         easyQuestions.put("Denmark", "Copenhagen");
+        easyQuestions.put("DPRK/North Korea", "Pyongyang");
         easyQuestions.put("Egypt", "Cairo");
         easyQuestions.put("France", "Paris");
         easyQuestions.put("Germany", "Berlin");
@@ -60,13 +62,11 @@ public class Questions
         easyQuestions.put("New Zealand", "Wellington");
         easyQuestions.put("Panama", "Panama City");
         easyQuestions.put("Russia", "Moscow");
-        easyQuestions.put("Saudi Arabia", "Riyadh");
         easyQuestions.put("Singapore", "Singapore");
         easyQuestions.put("South Africa", "Bloemfontein/Pretoria/Johannesburg");
         easyQuestions.put("South Korea", "Seoul");
         easyQuestions.put("Spain", "Madrid");
         easyQuestions.put("Thailand", "Bangkok");
-        easyQuestions.put("Ukraine", "Kyiv");
         easyQuestions.put("United Arab Emirates", "Abu Dhabi");
         easyQuestions.put("United Kingdom", "London");
         easyQuestions.put("USA", "Washington DC");
@@ -88,7 +88,6 @@ public class Questions
         mediumQuestions.put("Croatia", "Zagreb");
         mediumQuestions.put("Cuba", "Havana");
         mediumQuestions.put("Democratic Republic of the Congo", "Kinshasa");
-        mediumQuestions.put("DPRK/North Korea", "Pyongyang");
         mediumQuestions.put("Estonia", "Tallinn");
         mediumQuestions.put("Ethiopia", "Addis Ababa");
         mediumQuestions.put("Finland", "Helsinki");
@@ -117,11 +116,13 @@ public class Questions
         mediumQuestions.put("Romania", "Bucharest");
         mediumQuestions.put("San Marino", "San Marino");
         mediumQuestions.put("Sao Tome and Principe", "Sao Tome");
+        mediumQuestions.put("Saudi Arabia", "Riyadh");
         mediumQuestions.put("Serbia", "Belgrade");
         mediumQuestions.put("Sweden", "Stockholm");
         mediumQuestions.put("Switzerland", "Bern");
         mediumQuestions.put("Tunisia", "Tunis");
         mediumQuestions.put("Turkey", "Ankara");
+        easyQuestions.put("Ukraine", "Kyiv");
         mediumQuestions.put("Uruguay", "Montevideo");
         mediumQuestions.put("Venezuela", "Caracas");
         
@@ -244,6 +245,7 @@ public class Questions
      */
     public HashMap getQuestions(double difficulty) {
         if (difficulty == difficulties[0]) {
+            UI.println(easyQuestions);
             return easyQuestions;
         } else if (difficulty == difficulties[1]) {
             return mediumQuestions;

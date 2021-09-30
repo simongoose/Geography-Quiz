@@ -28,8 +28,10 @@ public class Quiz
     private String currentCapital;  // stores the current capital
     private String otherCountry;   // stores the other country as an answer option
     private String otherCapital;   // stores the other capital as an answer option
+    private String answering;      // what is currently being answered
     
     private String[] otherAnswers;  // stores the other possible answers
+    private String[] otherCountryAnswers;  // stores the other possible country answers
     private ArrayList<String> countries;     // stores all countries
     
     private int amtLeft;    // the amount of questions left to be asked
@@ -37,6 +39,9 @@ public class Quiz
     private int score;  // users score
     private int lives;  // users lives
     private int correctIdx;     // index of correct answer
+    
+    private boolean answeringCap = true;   // if answering capital of not
+                                           // true by default
     
     private final int OTHERAMT = 3;     // amount of other possible answers
     private int currentAnswerKey;   // the current answer key
@@ -63,14 +68,14 @@ public class Quiz
      * 
      * @return HashMap of the questions for the round
      */
-    public void getQs(String difficulty) {
+    public void getQs(double difficulty) {
         // reset the question and answer key information for the new round
         questions.clear();
         answerKey.clear();
         currentAnswerKey = 1;
         
         // get the new questions
-        questions = qs.getQuestions(diff);
+        questions = qs.getQuestions(difficulty);
         amt = questions.size();   // get the length of hashmap
         amtLeft = amt;  // set amount left to amount
         countries = new ArrayList<String>();    // declare arraylist
@@ -79,6 +84,29 @@ public class Quiz
         for (String country : questions.keySet()) {
             countries.add(country);
         }
+    }
+    
+    /**
+     * Chooses the mode
+     */
+    public boolean mode(boolean answerCap) {
+        // switch the mode
+        if (answerCap == true) {
+            answerCap = false;
+        } else if (answerCap == false) {
+            answerCap = true;
+        }
+        
+        // store values
+        this.answeringCap = answerCap;
+        if (answerCap == true) {
+            answering = "Country to Capital";
+        } else if (answerCap == false) {
+            answering = "Capital to Country";
+        }
+        
+        // return new value
+        return answerCap;
     }
     
     /**
@@ -94,9 +122,11 @@ public class Quiz
             }
         }
         
+        // set values
         amtLeft--;
         correctIdx = choiceIdx;
         
+        // store values
         currentCountry = countries.get(choiceIdx);   // choose the random country
         currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
         askedQuestions.put(currentCountry, currentCapital); // add them to the asked questions hashmap
@@ -190,9 +220,15 @@ public class Quiz
             otherCapital = questions.get(otherCountry);  // get the capital of the chosen country
             
             // add other options to hashmap for current question
-            otherAnswers[answerIdx] = otherCapital;
+            if (answeringCap == true) {
+                otherAnswers[answerIdx] = otherCapital;
+            } else if (answeringCap == false) {
+                otherAnswers[answerIdx] = otherCountry;
+            }
+            // increment answerIdx
             answerIdx++;
         }
+
     }
 
     /**
@@ -203,7 +239,11 @@ public class Quiz
         
         // add the current capital to the answer key
         currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
-        answerKey.put(currentAnswerKey, currentCapital);   
+        if (answeringCap == true) {
+            answerKey.put(currentAnswerKey, currentCapital);
+        } else if (answeringCap == false) {
+            answerKey.put(currentAnswerKey, currentCountry);
+        }
         correctAnswerKey = currentAnswerKey;    // get the correct answer and its key
         
         // run as long as hashmap isnt full

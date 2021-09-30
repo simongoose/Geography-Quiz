@@ -21,8 +21,12 @@ public class GUI
     private int amount;         // the amount of questions to be asked
     private int score = 0;          // user score
     private int lives = 3;          // user lives
-    private String diff;        // difficulty of the quiz
+    private double diff;        // difficulty of the quiz
     private boolean correct;    // if answer is correct or not
+    
+    private boolean answerCap = true;  // if answers are capitals or not
+                                       // true by default
+    private String answering = "capital";       // what is being answered
     
     private double qAsked;         // no of questions asked
     private double qCorrect;       // no of questions correct
@@ -45,6 +49,7 @@ public class GUI
         // UI setup
         UI.initialise();
         UI.addButton("Play", this::playGame);
+        UI.addButton("Switch Mode", this::switchMode);
         UI.addButton("Statistics", this::showStats);
         UI.addButton("Information", this::showInfo);
         UI.addButton("Quit", UI::quit);
@@ -82,7 +87,7 @@ public class GUI
                 answers.clear();
                 amount--;
                 
-                if (lives == 0) {
+                if (lives <= 0) {
                      break;
                 }
             }
@@ -98,16 +103,41 @@ public class GUI
         }    
     }
     
+    /** 
+     * Switches the mode
+     */
+    private void switchMode() {
+        answerCap = qz.mode(answerCap);
+        
+        // generate answering String
+        if (answerCap == true) {
+            answering = "capital";
+        } else if (answerCap == false) {
+            answering = "country";
+        }
+    }
+    
     /**
      * Gets the question for the round
      */
     private void getQuestion() {
-        qz.chooseQuestion();    // choose the question to be asked
-        question = qz.getCountry();  // store the question
-        realAnswer = qz.getCapital();   // store the real answer
-        qz.otherAnswers();  // generate the answers
-        qz.assignAnswerKey();   // store the answers with their keys
-        answers = qz.getAnswers();    // store the other answers
+        // get q and a's for capital answers
+        if (answerCap == true) {
+            qz.chooseQuestion();    // choose the question to be asked
+            question = qz.getCountry();  // store the question
+            realAnswer = qz.getCapital();   // store the real answer
+            qz.otherAnswers();  // generate the answers
+            qz.assignAnswerKey();   // store the answers with their keys
+            answers = qz.getAnswers();    // store the other answers
+        } else if (answerCap == false) {
+            // get q and a's for country answers
+            qz.chooseQuestion();    // choose the question to be asked
+            question = qz.getCapital();  // store the question
+            realAnswer = qz.getCountry();   // store the real answer
+            qz.otherAnswers();  // generate the answers
+            qz.assignAnswerKey();   // store the answers with their keys
+            answers = qz.getAnswers();    // store the other answers
+        }
     }
     
     /**
@@ -117,7 +147,7 @@ public class GUI
         int answerIdx = 0;  // reset answer index
         
         // ask the questions
-        UI.println("What is the capital of " + question + "?");
+        UI.println("What is the " + answering + " of " + question + "?");
         for (int i = 1; i <= 4; i++) {
             UI.println(i + ") " + answers.get(i - 1));
         }
@@ -186,13 +216,19 @@ public class GUI
             UI.println("4) Expert");
             double diffIdx = UI.askDouble("Enter number: ");
             allowed = qz.setDifficulty(diffIdx);
+            diff = diffIdx;
         }
+       
     }
     
     /**
      * Displays game information
      */
     private void showInfo() {
+        UI.println();   // line break and clear text pane
+        UI.clearText();
+        
+        // print information
         UI.println("To start the game press Play Game.");
         UI.println("You can then select the difficulty, and the game will start.");
         UI.println("Each game you have 3 lives, which are taken away when you get a question wrong.");

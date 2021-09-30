@@ -1,9 +1,9 @@
 #BlueJ package file
-dependency1.from=GUI
-dependency1.to=Quiz
+dependency1.from=Quiz
+dependency1.to=Questions
 dependency1.type=UsesDependency
-dependency2.from=Quiz
-dependency2.to=Questions
+dependency2.from=GUI
+dependency2.to=Quiz
 dependency2.type=UsesDependency
 editor.fx.0.height=1056
 editor.fx.0.width=1936
