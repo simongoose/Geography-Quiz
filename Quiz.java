@@ -58,9 +58,6 @@ public class Quiz
     public Quiz(double difficulty) {
         this.diff = difficulty;
         
-        // reset scores and lives
-        lives = 3;
-        score = 0;
     }
     
     /**
@@ -73,6 +70,10 @@ public class Quiz
         questions.clear();
         answerKey.clear();
         currentAnswerKey = 1;
+        
+        // reset scores and lives
+        lives = 3;
+        score = 0;
         
         // get the new questions
         questions = qs.getQuestions(difficulty);
@@ -213,7 +214,8 @@ public class Quiz
         for (int i = 0; i < OTHERAMT; i++) {
             int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
 
-            while (Arrays.asList(otherAnswers).contains(questions.get(countries.get(choiceIdx))) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry)) {
+            while (Arrays.asList(otherAnswers).contains(questions.get(countries.get(choiceIdx))) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry) || 
+            Arrays.asList(otherAnswers).contains(countries.get(choiceIdx))) {
                 choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
             }
             otherCountry = countries.get(choiceIdx);   // choose the random country

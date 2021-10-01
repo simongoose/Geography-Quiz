@@ -20,7 +20,7 @@ public class GUI
     private String realAnswer;  // the real answer to the question
     private int amount;         // the amount of questions to be asked
     private int score = 0;          // user score
-    private int lives = 3;          // user lives
+    private int lives;          // user lives
     private double diff;        // difficulty of the quiz
     private boolean correct;    // if answer is correct or not
     
@@ -62,6 +62,9 @@ public class GUI
         // reset lives and score
         lives = 3;
         score = 0;
+        
+        UI.clearGraphics();
+        UI.clearText(); // reset text and graphics panes
         
         this.askDifficulty(true);
         qz.getQs(diff);         // get the questions
@@ -147,7 +150,11 @@ public class GUI
         int answerIdx = 0;  // reset answer index
         
         // ask the questions
-        UI.println("What is the " + answering + " of " + question + "?");
+        if (answering == "capital") {
+            UI.println("What is the capital of " + question + "?");
+        } else if (answering == "country") {
+            UI.println(question + " is the capital of which country?");
+        }
         for (int i = 1; i <= 4; i++) {
             UI.println(i + ") " + answers.get(i - 1));
         }

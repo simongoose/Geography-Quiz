@@ -32,6 +32,13 @@ public class Questions
      */
     public Questions(String something)
     { 
+
+    }
+    
+    /**
+     * Fill the hashmaps
+     */
+    private void fillMaps() {
         // add keys and values (country, capital)
         // easy questions
         easyQuestions.put("Argentina", "Buenos Aires");
@@ -236,6 +243,7 @@ public class Questions
         expertQuestions.put("Vanuatu", "Port Vila");
         expertQuestions.put("Zambia", "Lusaka");
         expertQuestions.put("Zimbabwe", "Harare");
+        expertQuestions.put("Simon", "Goose");
     }
     
     /**
@@ -244,8 +252,11 @@ public class Questions
      * @return HashMap - the hashmap for the desired difficulty
      */
     public HashMap getQuestions(double difficulty) {
+        // fill hashmaps
+        this.fillMaps();
+               
+        // return selected questions
         if (difficulty == difficulties[0]) {
-            UI.println(easyQuestions);
             return easyQuestions;
         } else if (difficulty == difficulties[1]) {
             return mediumQuestions;
