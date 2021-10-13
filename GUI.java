@@ -31,6 +31,12 @@ public class GUI
     private double qAsked;         // no of questions asked
     private double qCorrect;       // no of questions correct
     
+    // highscores for each difficulty
+    private double bestEasy = 0;
+    private double bestMed = 0;
+    private double bestHard = 0;
+    private double bestExp = 0;
+    
     private ArrayList<Integer> keys = new ArrayList<Integer>();  // keys to the answers
     
     private HashMap<Integer, String> answers =
@@ -71,6 +77,7 @@ public class GUI
         amount = qz.getAmount();    // store the amount of questions
         UI.println();   // line break
         
+        // ask question
         if (lives != 0) {
             while (amount != 0) {
                 // ask user the question
@@ -90,20 +97,52 @@ public class GUI
                 answers.clear();
                 amount--;
                 
+                // wait for a few seconds
+                UI.sleep(3000);
+                
+                // reset the graphics and text panes
+                UI.clearGraphics();
+                UI.clearText();
+                
+                
                 if (lives <= 0) {
                      break;
                 }
             }
         }
         
+        // if user 'wins'
         if (amount == 0) {
             UI.println("You finished this difficulty!");
             UI.println("Congratulations, your final score was " + score + "!");
             UI.println("Your final amount of lives was " + lives + "!");
-        } else {
+        } else {    // if user loses
             UI.println("You ran out of lives :(");
             UI.println("Your final score was " + score + "!"); 
         }    
+
+        // add highscores
+        if (diff == 1) {
+            if (score > bestEasy) {
+                bestEasy = score;
+                UI.println("You got a new high score in Easy difficulty of " + bestEasy);
+            }
+        } else if (diff == 2) {
+            if (score > bestMed) {
+                bestMed = score;
+                UI.println("You got a new high score in Easy difficulty of " + bestMed);
+            }
+        } else if (diff == 3) {
+            if (score > bestHard) {
+                bestHard = score;
+                UI.println("You got a new high score in Easy difficulty of " + bestHard);
+            }
+        } else if (diff == 4) {
+            if (score > bestExp) {
+                bestExp = score;
+                UI.println("You got a new high score in Easy difficulty of " + bestExp);
+            }
+        }
     }
     
     /** 
@@ -162,6 +201,7 @@ public class GUI
         // obtain the users answer
         int userNum = UI.askInt("Enter number: ");
         while (!keys.contains(userNum)) {
+            UI.println("Please enter 1, 2, 3 or 4.\n");
             userNum = UI.askInt("Enter number: ");
         }
         
@@ -200,14 +240,18 @@ public class GUI
         UI.clearText();
         
         // print stats
-        UI.println("Questions asked: " + qAsked);
-        UI.println("Questions correct: " + qCorrect);
-        UI.println("Questions wrong: " + (qAsked - qCorrect));
+        UI.println("Questions correct/asked: " + qCorrect + "/" + qAsked);
+        
+        UI.println("\nHighscores:");
+        UI.println("Easy: " + bestEasy);
+        UI.println("Medium: " + bestMed);
+        UI.println("Hard: " + bestHard);
+        UI.println("Expert: " + bestExp);
         
         // print percentage correct
         double percentage = (qCorrect/qAsked) * 100;
         String percentRounded = String.format("%.02f", percentage);
-        UI.println("Percentage correct: " + percentRounded + "%");
+        UI.println("\nPercentage correct: " + percentRounded + "%");
     }
     
     /**
@@ -222,6 +266,10 @@ public class GUI
             UI.println("3) Hard");
             UI.println("4) Expert");
             double diffIdx = UI.askDouble("Enter number: ");
+            // let user know if their answer was invalid
+            if (diffIdx > 4 || diffIdx < 1) {
+                UI.println("Please enter 1, 2, 3 or 4.\n");
+            }
             allowed = qz.setDifficulty(diffIdx);
             diff = diffIdx;
         }
@@ -236,11 +284,13 @@ public class GUI
         UI.clearText();
         
         // print information
-        UI.println("To start the game press Play Game.");
-        UI.println("You can then select the difficulty, and the game will start.");
-        UI.println("Each game you have 3 lives, which are taken away when you get a question wrong.");
-        UI.println("You get one point for every right answer.");
-        UI.println("When you run out of lives, the game ends.");
-        UI.println("The game also ends if you have finished the difficulty (answered all questions).");
+        UI.println("> To start the game press Play Game");
+        UI.println("> You can then select the difficulty, and the game will start");
+        UI.println("> Each game you have 3 lives, one is taken away when you get a question wrong");
+        UI.println("> You get one point for every right answer");
+        UI.println("> When you run out of lives, the game ends");
+        UI.println("> The game also ends if you have finished the difficulty (answered all questions)");
+        UI.println("> The switch mode button lets you choose between 'country to capital' and 'capital to country'");
+        UI.println("> Statistics shows you various stats and highscores");
     }
 }

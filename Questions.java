@@ -129,7 +129,7 @@ public class Questions
         mediumQuestions.put("Switzerland", "Bern");
         mediumQuestions.put("Tunisia", "Tunis");
         mediumQuestions.put("Turkey", "Ankara");
-        easyQuestions.put("Ukraine", "Kyiv");
+        mediumQuestions.put("Ukraine", "Kyiv");
         mediumQuestions.put("Uruguay", "Montevideo");
         mediumQuestions.put("Venezuela", "Caracas");
         
