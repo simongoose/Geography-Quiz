@@ -26,10 +26,16 @@ public class GUI
     
     private boolean answerCap = true;  // if answers are capitals or not
                                        // true by default
+                                       
+    private boolean gameRunning = false;    // if the game is currently running
+                                            // false by default
     private String answering = "capital";       // what is being answered
     
     private double qAsked;         // no of questions asked
     private double qCorrect;       // no of questions correct
+    
+    private int userAnswer;     // user answer
+    private boolean answered = false;  // if user has answered yet
     
     // highscores for each difficulty
     private double bestEasy = 0;
@@ -41,6 +47,29 @@ public class GUI
     
     private HashMap<Integer, String> answers =
         new HashMap<Integer, String>();  // stores countries/capitals to be used in the multichoice answers
+        
+    // mouse values
+    private double currentX;
+    private double currentY;
+    private String currentAction;
+    
+    // constants for drawing on UI
+    private double BORDER_LEFT = 0;
+    private double BORDER_WIDTH = 500;
+    private double BORDER_TOP = 0;
+    private double BORDER_HEIGHT = 500;
+    
+    private double Q_LINE_Y = 100;
+    private double I_LINE_Y = 300;
+    private double MID_LINE_X = 250;
+    private double A1_LINE_Y = 380;
+    private double A2_LINE_Y = 460;
+    
+    private double PH_LEFT = 100;
+    private double PH_TOP = 100;
+    private double PH_WIDTH = 300;
+    private double PH_HEIGHT = 200;
+    
     
     /**
      * Constructor for objects of class Gui
@@ -58,6 +87,7 @@ public class GUI
         UI.addButton("Switch Mode", this::switchMode);
         UI.addButton("Statistics", this::showStats);
         UI.addButton("Information", this::showInfo);
+        UI.setMouseListener(this::doMouse);
         UI.addButton("Quit", UI::quit);
     }
     
@@ -80,9 +110,16 @@ public class GUI
         // ask question
         if (lives != 0) {
             while (amount != 0) {
+                // set game to running
+                gameRunning = true;
+                
                 // ask user the question
                 this.getQuestion();
-                int userAnswer = this.showQuestion();
+                this.displayQuestion();
+                
+                while (!answered) {
+                    
+                }
                 
                 // check users answer, get score and lives
                 correct = qz.scoreCalculator(userAnswer);
@@ -110,6 +147,12 @@ public class GUI
                 }
             }
         }
+        
+        // game is no longer running
+        gameRunning = false;
+        
+        // go to game end screen
+        this.gameEnd();
         
         // if user 'wins'
         if (amount == 0) {
@@ -149,13 +192,17 @@ public class GUI
      * Switches the mode
      */
     private void switchMode() {
-        answerCap = qz.mode(answerCap);
-        
-        // generate answering String
-        if (answerCap == true) {
-            answering = "capital";
-        } else if (answerCap == false) {
-            answering = "country";
+        if (gameRunning == false) {
+            answerCap = qz.mode(answerCap);
+            
+            // generate answering String
+            if (answerCap == true) {
+                answering = "capital";
+            } else if (answerCap == false) {
+                answering = "country";
+            }
+        } else {
+            UI.println("\nYou cannot change mode while in a game!");
         }
     }
     
@@ -187,6 +234,8 @@ public class GUI
      */
     private int showQuestion() {
         int answerIdx = 0;  // reset answer index
+        
+        this.displayQuestion();
         
         // ask the questions
         if (answering == "capital") {
@@ -231,27 +280,146 @@ public class GUI
         // add one to questions asked
         qAsked++;
     }
+    
+    /**
+     * Display the question
+     */
+    private void displayQuestion() {
+        // border
+        UI.setColor(Color.black);
+        UI.setLineWidth(5);
+        UI.drawRect(BORDER_LEFT, BORDER_TOP, BORDER_WIDTH, BORDER_HEIGHT);
+
+        // ask questions and draw images
+        if (answering == "capital") {
+            // image
+            String img = "img//" + question.toLowerCase() + ".jpg";
+            UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
+            
+            // lines
+            UI.drawLine(BORDER_LEFT, Q_LINE_Y, BORDER_WIDTH, Q_LINE_Y);
+            UI.drawLine(BORDER_LEFT, I_LINE_Y, BORDER_WIDTH, I_LINE_Y);
+            UI.drawLine(BORDER_LEFT, A1_LINE_Y, BORDER_WIDTH, A1_LINE_Y);
+            UI.drawLine(BORDER_LEFT, A2_LINE_Y, BORDER_WIDTH, A2_LINE_Y);
+            UI.drawLine(MID_LINE_X, I_LINE_Y, MID_LINE_X, A2_LINE_Y);
+            
+            // ask question
+            UI.setFontSize(20);
+            UI.drawString("What is the capital of " + question + "?", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            // answers
+            UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
+            UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
+            UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
+            UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
+            
+        } else if (answering == "country") {
+            // image
+            String img = "img//" + realAnswer.toLowerCase().trim() + ".jpg";
+            UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
+            
+            // lines
+            UI.drawLine(BORDER_LEFT, Q_LINE_Y, BORDER_WIDTH, Q_LINE_Y);
+            UI.drawLine(BORDER_LEFT, I_LINE_Y, BORDER_WIDTH, I_LINE_Y);
+            UI.drawLine(BORDER_LEFT, A1_LINE_Y, BORDER_WIDTH, A1_LINE_Y);
+            UI.drawLine(BORDER_LEFT, A2_LINE_Y, BORDER_WIDTH, A2_LINE_Y);
+            UI.drawLine(MID_LINE_X, I_LINE_Y, MID_LINE_X, A2_LINE_Y);
+            
+            // ask question
+            UI.setFontSize(20);
+            UI.drawString(question + " is the capital of?", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            // answers
+            UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
+            UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
+            UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
+            UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
+        }
+        
+        // set answered to false
+        answered = false;
+    }
+    
+    /**
+     * Checks the answer
+     */
+    private void checkAnswer() {
+        // check which box has been clicked
+        
+        if ((currentAction.equalsIgnoreCase("pressed")) & (currentX < MID_LINE_X) & (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+            userAnswer = 1; // top left
+        } else if ((currentAction.equalsIgnoreCase("pressed")) & (currentX > MID_LINE_X) & (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+            userAnswer = 2; // top right
+        } else if ((currentAction.equalsIgnoreCase("pressed")) & (currentX < MID_LINE_X) & (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
+            userAnswer = 3; // bottom left
+        } else {
+            userAnswer = 4; // bottom right
+        }
+        
+        // change answered as question has been answered
+        answered = true;
+    }
+    
+    /**
+     * Mouse Listener
+     */
+    private void doMouse(String action, double x, double y) {
+        // set values
+        currentX = x;
+        currentY = y;
+        currentAction = action;
+        
+        // run appropriate methods
+        if ((gameRunning == true) && (x < BORDER_WIDTH) && (y > I_LINE_Y) && (y < A2_LINE_Y)) {
+            checkAnswer();
+        }
+    }
+    
+    /**
+     * Game end screen
+     */
+    private void gameEnd() {
+        // draw strings
+        if (lives == 0) {
+            UI.drawString("Game over, you're out of lives!", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            UI.drawString("Score: " + score, BORDER_LEFT + 5, Q_LINE_Y + 15);
+        } else {
+            UI.drawString("Congratulations, difficulty has been completed!", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            UI.drawString("Score: " + score, BORDER_LEFT + 5, Q_LINE_Y + 15);
+            UI.drawString("Lives leftover: " + lives, BORDER_LEFT + 5, Q_LINE_Y + 45);
+        }
+        
+        // display highscores if there are any
+        if (diff == 1) {
+            if (score > bestEasy) {
+                bestEasy = score;
+                UI.drawString("You got a new high score in Easy difficulty of " + bestEasy, BORDER_LEFT + 5, Q_LINE_Y + 75);
+            }
+        } else if (diff == 2) {
+            if (score > bestMed) {
+                bestMed = score;
+                UI.drawString("You got a new high score in Medium difficulty of " + bestMed, BORDER_LEFT + 5, Q_LINE_Y + 75);
+            }
+        } else if (diff == 3) {
+            if (score > bestHard) {
+                bestHard = score;
+                UI.drawString("You got a new high score in Hard difficulty of " + bestHard, BORDER_LEFT + 5, Q_LINE_Y + 75);
+            }
+        } else if (diff == 4) {
+            if (score > bestExp) {
+                bestExp = score;
+                UI.drawString("You got a new high score in Expert difficulty of " + bestExp, BORDER_LEFT + 5, Q_LINE_Y + 75);
+            }
+        }
+    }
 
     /**
      * Displays statistics
      */
     private void showStats() {
-        UI.println();   // line break and clear text pane
+        // clear the graphics window
+        UI.clearGraphics();
         UI.clearText();
         
-        // print stats
-        UI.println("Questions correct/asked: " + qCorrect + "/" + qAsked);
         
-        UI.println("\nHighscores:");
-        UI.println("Easy: " + bestEasy);
-        UI.println("Medium: " + bestMed);
-        UI.println("Hard: " + bestHard);
-        UI.println("Expert: " + bestExp);
-        
-        // print percentage correct
-        double percentage = (qCorrect/qAsked) * 100;
-        String percentRounded = String.format("%.02f", percentage);
-        UI.println("\nPercentage correct: " + percentRounded + "%");
     }
     
     /**
@@ -280,7 +448,8 @@ public class GUI
      * Displays game information
      */
     private void showInfo() {
-        UI.println();   // line break and clear text pane
+        // clear the graphics window
+        UI.clearGraphics();
         UI.clearText();
         
         // print information

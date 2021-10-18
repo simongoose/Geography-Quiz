@@ -51,7 +51,7 @@ public class Questions
         easyQuestions.put("China", "Beijing");
         easyQuestions.put("Czech Republic", "Prague");
         easyQuestions.put("Denmark", "Copenhagen");
-        easyQuestions.put("DPRK/North Korea", "Pyongyang");
+        easyQuestions.put("DPRK", "Pyongyang");
         easyQuestions.put("Egypt", "Cairo");
         easyQuestions.put("France", "Paris");
         easyQuestions.put("Germany", "Berlin");
@@ -70,7 +70,7 @@ public class Questions
         easyQuestions.put("Panama", "Panama City");
         easyQuestions.put("Russia", "Moscow");
         easyQuestions.put("Singapore", "Singapore");
-        easyQuestions.put("South Africa", "Bloemfontein/Pretoria/Johannesburg");
+        easyQuestions.put("South Africa", "Johannesburg");
         easyQuestions.put("South Korea", "Seoul");
         easyQuestions.put("Spain", "Madrid");
         easyQuestions.put("Thailand", "Bangkok");
@@ -85,7 +85,7 @@ public class Questions
         mediumQuestions.put("Algeria", "Algiers");
         mediumQuestions.put("Azerbaijan", "Baku");
         mediumQuestions.put("Belarus", "Minsk");
-        mediumQuestions.put("Bolivia", "La Paz/Sucre");
+        mediumQuestions.put("Bolivia", "Sucre");
         mediumQuestions.put("Bosnia and Herzegovina", "Sarajevo");
         mediumQuestions.put("Bulgaria", "Sofia");
         mediumQuestions.put("Cambodia", "Phnom Penh");
@@ -184,7 +184,7 @@ public class Questions
         hardQuestions.put("Sierra Leone", "Freetown");
         hardQuestions.put("Slovakia", "Bratislava");
         hardQuestions.put("Slovenia", "Ljubljana");
-        hardQuestions.put("Sri Lanka", "Colombo/Sri Jayawardenepura Kotte");
+        hardQuestions.put("Sri Lanka", "Colombo");
         hardQuestions.put("Sudan", "Khartoum");
         hardQuestions.put("Syria", "Damascus");
         hardQuestions.put("Tanzania", "Dodoma");
@@ -243,7 +243,6 @@ public class Questions
         expertQuestions.put("Vanuatu", "Port Vila");
         expertQuestions.put("Zambia", "Lusaka");
         expertQuestions.put("Zimbabwe", "Harare");
-        expertQuestions.put("Simon", "Goose");
     }
     
     /**
