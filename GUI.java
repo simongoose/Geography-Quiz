@@ -49,9 +49,9 @@ public class GUI
         new HashMap<Integer, String>();  // stores countries/capitals to be used in the multichoice answers
         
     // mouse values
-    private double currentX;
-    private double currentY;
-    private String currentAction;
+    private double currentX = 0;
+    private double currentY = 0;
+    private String currentAction = "";
     
     // constants for drawing on UI
     private double BORDER_LEFT = 0;
@@ -69,6 +69,7 @@ public class GUI
     private double PH_TOP = 100;
     private double PH_WIDTH = 300;
     private double PH_HEIGHT = 200;
+
     
     
     /**
@@ -83,6 +84,7 @@ public class GUI
         
         // UI setup
         UI.initialise();
+        UI.setDivider(0.4);
         UI.addButton("Play", this::playGame);
         UI.addButton("Switch Mode", this::switchMode);
         UI.addButton("Statistics", this::showStats);
@@ -117,10 +119,10 @@ public class GUI
                 this.getQuestion();
                 this.displayQuestion();
                 
-                while (!answered) {
-                    
+                while (answered == false) {
+                    checkAnswer();
                 }
-                
+
                 // check users answer, get score and lives
                 correct = qz.scoreCalculator(userAnswer);
                 score = qz.getScore();
@@ -279,6 +281,11 @@ public class GUI
         
         // add one to questions asked
         qAsked++;
+        // reset answered, x, y and useranswer
+        answered = false;
+        userAnswer = 0;
+        currentX = 0;
+        currentY = 0;
     }
     
     /**
@@ -333,9 +340,6 @@ public class GUI
             UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
         }
-        
-        // set answered to false
-        answered = false;
     }
     
     /**
@@ -343,19 +347,29 @@ public class GUI
      */
     private void checkAnswer() {
         // check which box has been clicked
+        userAnswer = 0;
         
-        if ((currentAction.equalsIgnoreCase("pressed")) & (currentX < MID_LINE_X) & (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+        if ((currentAction.equalsIgnoreCase("clicked")) && (currentX < MID_LINE_X) && (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
             userAnswer = 1; // top left
-        } else if ((currentAction.equalsIgnoreCase("pressed")) & (currentX > MID_LINE_X) & (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
-            userAnswer = 2; // top right
-        } else if ((currentAction.equalsIgnoreCase("pressed")) & (currentX < MID_LINE_X) & (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
-            userAnswer = 3; // bottom left
-        } else {
-            userAnswer = 4; // bottom right
+            // change answered as question has been answered
+            answered = true;
         }
-        
-        // change answered as question has been answered
-        answered = true;
+        if ((currentAction.equalsIgnoreCase("clicked")) && (currentX > MID_LINE_X) && (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+            userAnswer = 2; // top right
+            // change answered as question has been answered
+            answered = true;
+        }
+        if ((currentAction.equalsIgnoreCase("clicked")) && (currentX < MID_LINE_X) && (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
+            userAnswer = 3; // bottom left
+            // change answered as question has been answered
+            answered = true;
+        } 
+        if ((currentAction.equalsIgnoreCase("clicked")) && (currentX > MID_LINE_X) && (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
+            userAnswer = 4; // bottom right
+            // change answered as question has been answered
+            answered = true;
+        }
+
     }
     
     /**
