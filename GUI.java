@@ -538,7 +538,7 @@ public class GUI
         UI.drawString("- The switch mode button lets you choose between", BORDER_LEFT + 5, 15 * fontSize);
         UI.drawString("'country to capital' and 'capital to country'", BORDER_LEFT + 5, 16 * fontSize);
         
-        UI.drawString("- Statistics shows you various stats and highscores", BORDER_LEFT + 5, 18 * fontSize);
+        UI.drawString("- Statistics shows your various stats and highscores", BORDER_LEFT + 5, 18 * fontSize);
     }
     
     /**
