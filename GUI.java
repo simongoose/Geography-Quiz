@@ -311,7 +311,7 @@ public class GUI
         // ask questions and draw images
         if (answering == "capital") {
             // image
-            String img = "img//" + question.toLowerCase() + ".jpg";
+            String img = question.toLowerCase() + ".jpg";
             UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
             
             
@@ -329,7 +329,7 @@ public class GUI
             
         } else if (answering == "country") {
             // image
-            String img = "img//" + realAnswer.toLowerCase().trim() + ".jpg";
+            String img = realAnswer.toLowerCase().trim() + ".jpg";
             UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
             
             // print border
