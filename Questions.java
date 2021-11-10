@@ -30,7 +30,7 @@ public class Questions
      * 
      * @param something
      */
-    public Questions(String something)
+    public Questions()
     { 
 
     }
@@ -95,6 +95,7 @@ public class Questions
         mediumQuestions.put("Croatia", "Zagreb");
         mediumQuestions.put("Cuba", "Havana");
         mediumQuestions.put("Democratic Republic of the Congo", "Kinshasa");
+        mediumQuestions.put("El Salvador", "San Salvador");
         mediumQuestions.put("Estonia", "Tallinn");
         mediumQuestions.put("Ethiopia", "Addis Ababa");
         mediumQuestions.put("Finland", "Helsinki");
@@ -190,7 +191,6 @@ public class Questions
         hardQuestions.put("Tanzania", "Dodoma");
         hardQuestions.put("Tonga", "Nuku'alofa");
         hardQuestions.put("Trinidad and Tobago", "Port of Spain");
-        hardQuestions.put("Turkmenistan", "Ashgabat");
         hardQuestions.put("Uganda", "Kampala");
         hardQuestions.put("Yemen", "Sana'a");
         
@@ -207,7 +207,6 @@ public class Questions
         expertQuestions.put("Comoros", "Moroni");
         expertQuestions.put("Congo (Republic of the)", "Brazzaville");
         expertQuestions.put("Dominica", "Roseau");
-        expertQuestions.put("El Salvador", "San Salvador");
         expertQuestions.put("Equatorial Guinea", "Malabo");
         expertQuestions.put("Eritrea", "Asmara");
         expertQuestions.put("Eswatini", "Mbabane");
@@ -238,6 +237,7 @@ public class Questions
         expertQuestions.put("Tajikistan", "Dushanbe");
         expertQuestions.put("Timor-Leste", "Dili");
         expertQuestions.put("Togo", "Lome");
+        expertQuestions.put("Turkmenistan", "Ashgabat");
         expertQuestions.put("Tuvalu", "Funafuti");
         expertQuestions.put("Uzbekistan", "Tashkent");
         expertQuestions.put("Vanuatu", "Port Vila");

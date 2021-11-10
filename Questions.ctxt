@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Questions
 comment0.text=\r\n\ Creates\ questions\ in\ hashmaps\ based\ on\ difficulty\r\n\ Returns\ questions\ to\ be\ asked\ to\ the\ user\r\n\r\n\ @author\ Simon\ Lee\r\n\ @version\ 02/09/2021\r\n
-comment1.params=something
-comment1.target=Questions(java.lang.String)
+comment1.params=
+comment1.target=Questions()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Questions\r\n\ \r\n\ Creates\ 4\ hashmaps\ for\ the\ 4\ difficulties\ of\ questions\r\n\ Stores\ all\ questions\ in\ (country,\ capital)\ format\r\n\ \r\n\ @param\ something\r\n
 comment2.params=
 comment2.target=void\ fillMaps()

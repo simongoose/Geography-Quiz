@@ -48,7 +48,7 @@ public class Quiz
     private int correctAnswerKey;    // the correct answer key
     private final int FULLKEY = 4;      // the maximum amount of answers
     
-    Questions qs = new Questions("something");
+    Questions qs = new Questions();
     
     /**
      * Constructor for objects of class Quiz
