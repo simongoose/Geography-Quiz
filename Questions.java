@@ -10,7 +10,8 @@ import ecs100.*;    // import ecs100 library
 public class Questions
 {
     // fields
-    private double[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
+    // stores the 4 values of difficulties as indexes
+    private double[] difficulties = {1, 2, 3, 4};  
     
     // create hashmaps
     private static HashMap<String, String> easyQuestions = 
@@ -106,7 +107,7 @@ public class Questions
         mediumQuestions.put("Jamaica", "Kingston");
         mediumQuestions.put("Kenya", "Nairobi");
         mediumQuestions.put("Kuwait", "Kuwait City");
-        mediumQuestions.put("Kyrgyzstan","Bishkek");
+        mediumQuestions.put("Kyrgyzstan", "Bishkek");
         mediumQuestions.put("Latvia", "Riga");
         mediumQuestions.put("Lebanon", "Beirut");
         mediumQuestions.put("Luxembourg", "Luxembourg");
@@ -144,7 +145,7 @@ public class Questions
         hardQuestions.put("Bahrain", "Manama");
         hardQuestions.put("Belize", "Belmopan");
         hardQuestions.put("Botswana", "Gaborone");
-        hardQuestions.put("Burkina Faso","Ouagadougou");
+        hardQuestions.put("Burkina Faso", "Ouagadougou");
         hardQuestions.put("Cabo Verde", "Praia");
         hardQuestions.put("Cameroon", "Yaounde");
         hardQuestions.put("Cote D'Ivoire", "Yamoussoukro");
@@ -248,6 +249,7 @@ public class Questions
     /**
      * Returns the desired hashmap
      * 
+     * @param difficulty - the difficulty selected
      * @return HashMap - the hashmap for the desired difficulty
      */
     public HashMap getQuestions(double difficulty) {
@@ -257,11 +259,14 @@ public class Questions
         // return selected questions
         if (difficulty == difficulties[0]) {
             return easyQuestions;
-        } else if (difficulty == difficulties[1]) {
+        } 
+        else if (difficulty == difficulties[1]) {
             return mediumQuestions;
-        } else if (difficulty == difficulties[2]) {
+        } 
+        else if (difficulty == difficulties[2]) {
             return hardQuestions;
-        } else {
+        } 
+        else {
             return expertQuestions;
         }
     }

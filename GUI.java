@@ -43,10 +43,12 @@ public class GUI
     private double bestHard = 0;
     private double bestExp = 0;
     
-    private ArrayList<Integer> keys = new ArrayList<Integer>();  // keys to the answers
+      // keys to the answers
+    private ArrayList<Integer> keys = new ArrayList<Integer>();
     
+     // stores countries/capitals to be used in the multichoice answers
     private HashMap<Integer, String> answers =
-        new HashMap<Integer, String>();  // stores countries/capitals to be used in the multichoice answers
+        new HashMap<Integer, String>(); 
         
     // mouse values
     private double currentX = 0;
@@ -75,7 +77,7 @@ public class GUI
     /**
      * Constructor for objects of class Gui
      */
-    public GUI(){
+    public GUI() {
         // add keys to arraylist
         keys.add(1);
         keys.add(2);
@@ -149,7 +151,7 @@ public class GUI
                 
                 
                 if (lives <= 0) {
-                     break;
+                    break;
                 }
             }
         }
@@ -165,7 +167,8 @@ public class GUI
             UI.println("You finished this difficulty!");
             UI.println("Congratulations, your final score was " + score + "!");
             UI.println("Your final amount of lives was " + lives + "!");
-        } else {    // if user loses
+        } 
+        else {    // if user loses
             UI.println("You ran out of lives :(");
             UI.println("Your final score was " + score + "!"); 
         }    
@@ -174,22 +177,29 @@ public class GUI
         if (diff == 1) {
             if (score > bestEasy) {
                 bestEasy = (int)score;
-                UI.println("You got a new high score in Easy difficulty of " + bestEasy);
+                UI.println("You got a new high score in Easy difficulty of " 
+                    + bestEasy);
             }
-        } else if (diff == 2) {
+        } 
+        else if (diff == 2) {
             if (score > bestMed) {
                 bestMed = (int)score;
-                UI.println("You got a new high score in Medium difficulty of " + bestMed);
+                UI.println("You got a new high score in Medium difficulty of " 
+                    + bestMed);
             }
-        } else if (diff == 3) {
+        } 
+        else if (diff == 3) {
             if (score > bestHard) {
                 bestHard = (int)score;
-                UI.println("You got a new high score in Hard difficulty of " + bestHard);
+                UI.println("You got a new high score in Hard difficulty of " 
+                    + bestHard);
             }
-        } else if (diff == 4) {
+        } 
+        else if (diff == 4) {
             if (score > bestExp) {
                 bestExp = (int)score;
-                UI.println("You got a new high score in Expert difficulty of " + bestExp);
+                UI.println("You got a new high score in Expert difficulty of " 
+                    + bestExp);
             }
         }
     }
@@ -203,10 +213,12 @@ public class GUI
             // generate answering String
             if (answerCap == true) {
                 answering = "capital";
-            } else if (answerCap == false) {
+            } 
+            else if (answerCap == false) {
                 answering = "country";
             }
-        } else {
+        } 
+        else {
             UI.println("\nYou cannot change mode while in a game!");
         }
     }
@@ -223,7 +235,8 @@ public class GUI
             qz.otherAnswers();  // generate the answers
             qz.assignAnswerKey();   // store the answers with their keys
             answers = qz.getAnswers();    // store the other answers
-        } else if (answerCap == false) {
+        } 
+        else if (answerCap == false) {
             // get q and a's for country answers
             qz.chooseQuestion();    // choose the question to be asked
             question = qz.getCapital();  // store the question
@@ -242,7 +255,7 @@ public class GUI
         int correctIdx = 0;
         
         // get the id of the right answer
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             if (answers.get(i) == realAnswer) {
                 correctIdx = i;
             }
@@ -256,19 +269,22 @@ public class GUI
             UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
-        } else if (correctIdx == 1) {
+        } 
+        else if (correctIdx == 1) {
             UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
             UI.setColor(Color.red);
             UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
-        } else if (correctIdx == 2) {
+        } 
+        else if (correctIdx == 2) {
             UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
             UI.setColor(Color.red);
             UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
-        } else if (correctIdx == 3) {
+        } 
+        else if (correctIdx == 3) {
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
             UI.setColor(Color.red);
             UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
@@ -283,7 +299,8 @@ public class GUI
             UI.println("Your answer was correct!");
             // add one to questions correct
             qCorrect++;
-        } else {
+        } 
+        else {
             UI.println("Your answer was wrong :(");
         }
         
@@ -309,7 +326,7 @@ public class GUI
         this.border();
 
         // ask questions and draw images
-        if (answering == "capital") {
+        if (answering.equals("capital")) {
             // image
             String img = question.toLowerCase() + ".jpg";
             UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
@@ -320,14 +337,16 @@ public class GUI
             
             // ask question
             UI.setFontSize(20);
-            UI.drawString("What is the capital of " + question + "?", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            UI.drawString("What is the capital of " + question + "?", 
+                BORDER_LEFT + 5, Q_LINE_Y - 15);
             // answers
             UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(2), BORDER_LEFT + 5, A2_LINE_Y - 15);
             UI.drawString(answers.get(3), MID_LINE_X + 5, A2_LINE_Y - 15);
             
-        } else if (answering == "country") {
+        } 
+        else if (answering.equals("country")) {
             // image
             String img = realAnswer.toLowerCase().trim() + ".jpg";
             UI.drawImage(img, PH_LEFT, PH_TOP, PH_WIDTH, PH_HEIGHT);
@@ -337,7 +356,9 @@ public class GUI
             
             // ask question
             UI.setFontSize(20);
-            UI.drawString(question + " is the capital of which country?", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            UI.drawString(question + " is the capital of which country?", 
+                BORDER_LEFT + 5, Q_LINE_Y - 15);
+                    
             // answers
             UI.drawString(answers.get(0), BORDER_LEFT + 5, A1_LINE_Y - 15);
             UI.drawString(answers.get(1), MID_LINE_X + 5, A1_LINE_Y - 15);
@@ -353,22 +374,32 @@ public class GUI
         // check which box has been clicked
         userAnswer = 0;
         
-        if ((currentAction.equalsIgnoreCase("released")) && (currentX < MID_LINE_X) && (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+        if ((currentAction.equalsIgnoreCase("released")) 
+            && (currentX < MID_LINE_X) 
+            && (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
             userAnswer = 1; // top left
             // change answered as question has been answered
             answered = true;
         }
-        if ((currentAction.equalsIgnoreCase("released")) && (currentX > MID_LINE_X) && (currentX < BORDER_WIDTH) && (A1_LINE_Y > currentY) && (currentY > I_LINE_Y)) {
+        if ((currentAction.equalsIgnoreCase("released")) 
+            && (currentX > MID_LINE_X) 
+            && (currentX < BORDER_WIDTH) && (A1_LINE_Y > currentY) 
+            && (currentY > I_LINE_Y)) {
             userAnswer = 2; // top right
             // change answered as question has been answered
             answered = true;
         }
-        if ((currentAction.equalsIgnoreCase("released")) && (currentX < MID_LINE_X) && (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
+        if ((currentAction.equalsIgnoreCase("released")) 
+            && (currentX < MID_LINE_X) 
+            && (A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
             userAnswer = 3; // bottom left
             // change answered as question has been answered
             answered = true;
         } 
-        if ((currentAction.equalsIgnoreCase("released")) && (currentX > MID_LINE_X) && (currentX < BORDER_WIDTH) &&(A1_LINE_Y < currentY) && (currentY < A2_LINE_Y)) {
+        if ((currentAction.equalsIgnoreCase("released")) 
+            && (currentX > MID_LINE_X) 
+            && (currentX < BORDER_WIDTH) && (A1_LINE_Y < currentY) 
+            && (currentY < A2_LINE_Y)) {
             userAnswer = 4; // bottom right
             // change answered as question has been answered
             answered = true;
@@ -400,34 +431,45 @@ public class GUI
         
         // draw strings
         if (lives == 0) {
-            UI.drawString("Game over, you're out of lives!", BORDER_LEFT + 5, Q_LINE_Y - 15);
+            UI.drawString("Game over, you're out of lives!", 
+                BORDER_LEFT + 5, Q_LINE_Y - 15);
             UI.drawString("Score: " + score, BORDER_LEFT + 5, Q_LINE_Y + 15);
-        } else {
-            UI.drawString("Congratulations, difficulty has been completed!", BORDER_LEFT + 5, Q_LINE_Y - 15);
+        } 
+        else {
+            UI.drawString("Congratulations, difficulty has been completed!", 
+                BORDER_LEFT + 5, Q_LINE_Y - 15);
             UI.drawString("Score: " + score, BORDER_LEFT + 5, Q_LINE_Y + 15);
-            UI.drawString("Lives leftover: " + lives, BORDER_LEFT + 5, Q_LINE_Y + 45);
+            UI.drawString("Lives leftover: " + lives, 
+                BORDER_LEFT + 5, Q_LINE_Y + 45);
         }
         
         // display highscores if there are any
         if (diff == 1) {
             if (score > bestEasy) {
                 bestEasy = score;
-                UI.drawString("You got a new high score in Easy difficulty of " + (int)bestEasy, BORDER_LEFT + 5, Q_LINE_Y + 75);
+                UI.drawString("You got a high score in Easy difficulty of " 
+                    + (int)bestEasy, BORDER_LEFT + 5, Q_LINE_Y + 75);
             }
-        } else if (diff == 2) {
+        } 
+        else if (diff == 2) {
             if (score > bestMed) {
                 bestMed = score;
-                UI.drawString("You got a new high score in Medium difficulty of " + (int)bestMed, BORDER_LEFT + 5, Q_LINE_Y + 75);
+                UI.drawString("You got a high score in Medium difficulty of " 
+                    + (int)bestMed, BORDER_LEFT + 5, Q_LINE_Y + 75);
             }
-        } else if (diff == 3) {
+        } 
+        else if (diff == 3) {
             if (score > bestHard) {
                 bestHard = score;
-                UI.drawString("You got a new high score in Hard difficulty of " + (int)bestHard, BORDER_LEFT + 5, Q_LINE_Y + 75);
+                UI.drawString("You got a high score in Hard difficulty of " 
+                    + (int)bestHard, BORDER_LEFT + 5, Q_LINE_Y + 75);
             }
-        } else if (diff == 4) {
+        } 
+        else if (diff == 4) {
             if (score > bestExp) {
                 bestExp = score;
-                UI.drawString("You got a new high score in Expert difficulty of " + (int)bestExp, BORDER_LEFT + 5, Q_LINE_Y + 75);
+                UI.drawString("You got a high score in Expert difficulty of " 
+                    + (int)bestExp, BORDER_LEFT + 5, Q_LINE_Y + 75);
             }
         }
     }
@@ -441,7 +483,7 @@ public class GUI
         UI.clearText();
         
         // calculate stats
-        double percentage = (qCorrect/qAsked) * 100;
+        double percentage = (qCorrect / qAsked) * 100;
         String percentRounded = String.format("%.02f", percentage);
         
         // constants
@@ -477,9 +519,13 @@ public class GUI
         UI.setFontSize(24);
         UI.drawString("Correct/Asked", BORDER_LEFT + 5, PERCENTAGE_BOTTOM);
         if (qAsked == 0) {
-            UI.drawString((int)qCorrect + "/" + (int)qAsked + " (00.00%)", BORDER_WIDTH - 230, PERCENTAGE_BOTTOM);
-        } else {
-            UI.drawString((int)qCorrect + "/" + (int)qAsked + " (" + percentRounded + "%)", BORDER_WIDTH - 230, PERCENTAGE_BOTTOM);
+            UI.drawString((int)qCorrect + "/" + (int)qAsked + 
+                " (00.00%)", BORDER_WIDTH - 230, PERCENTAGE_BOTTOM);
+        } 
+        else {
+            UI.drawString((int)qCorrect + "/" + (int)qAsked + 
+                " (" + percentRounded + "%)", BORDER_WIDTH - 230, 
+                PERCENTAGE_BOTTOM);
         }
     }
     
@@ -520,25 +566,36 @@ public class GUI
         
         // print information
         UI.setFontSize(fontSize);
-        UI.drawString("- To start the game press Play Game", BORDER_LEFT + 5, 1 * fontSize);
+        UI.drawString("- To start the game press Play Game", 
+            BORDER_LEFT + 5, 1 * fontSize);
         
-        UI.drawString("- You can then select the difficulty, and the game", BORDER_LEFT + 5, 3 * fontSize);
+        UI.drawString("- You can then select the difficulty, and the game", 
+            BORDER_LEFT + 5, 3 * fontSize);
         UI.drawString("will start", BORDER_LEFT + 5, 4 * fontSize);
         
-        UI.drawString("- Each game you have 3 lives, one is taken away when", BORDER_LEFT + 5, 6 * fontSize);
-        UI.drawString("you get a question wrong", BORDER_LEFT + 5, 7 * fontSize);
+        UI.drawString("- Each game you have 3 lives, one is taken away when", 
+            BORDER_LEFT + 5, 6 * fontSize);
+        UI.drawString("you get a question wrong", 
+            BORDER_LEFT + 5, 7 * fontSize);
         
-        UI.drawString("- You get one point for every right answer", BORDER_LEFT + 5, 9 * fontSize);
+        UI.drawString("- You get one point for every right answer", 
+            BORDER_LEFT + 5, 9 * fontSize);
         
-        UI.drawString("- When you run out of lives, the game ends", BORDER_LEFT + 5, 10 * fontSize);
+        UI.drawString("- When you run out of lives, the game ends", 
+            BORDER_LEFT + 5, 10 * fontSize);
         
-        UI.drawString("- The game also ends if you have finished the", BORDER_LEFT + 5, 12 * fontSize);
-        UI.drawString("difficulty (answered all questions)", BORDER_LEFT + 5, 13 * fontSize);
+        UI.drawString("- The game also ends if you have finished the", 
+            BORDER_LEFT + 5, 12 * fontSize);
+        UI.drawString("difficulty (answered all questions)", 
+            BORDER_LEFT + 5, 13 * fontSize);
         
-        UI.drawString("- The switch mode button lets you choose between", BORDER_LEFT + 5, 15 * fontSize);
-        UI.drawString("'country to capital' and 'capital to country'", BORDER_LEFT + 5, 16 * fontSize);
+        UI.drawString("- The switch mode button lets you choose between", 
+            BORDER_LEFT + 5, 15 * fontSize);
+        UI.drawString("'country to capital' and 'capital to country'", 
+            BORDER_LEFT + 5, 16 * fontSize);
         
-        UI.drawString("- Statistics shows your various stats and highscores", BORDER_LEFT + 5, 18 * fontSize);
+        UI.drawString("- Statistics shows your various stats and highscores", 
+            BORDER_LEFT + 5, 18 * fontSize);
     }
     
     /**

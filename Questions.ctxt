@@ -9,5 +9,5 @@ comment2.target=void\ fillMaps()
 comment2.text=\r\n\ Fill\ the\ hashmaps\r\n
 comment3.params=difficulty
 comment3.target=java.util.HashMap\ getQuestions(double)
-comment3.text=\r\n\ Returns\ the\ desired\ hashmap\r\n\ \r\n\ @return\ HashMap\ -\ the\ hashmap\ for\ the\ desired\ difficulty\r\n
+comment3.text=\r\n\ Returns\ the\ desired\ hashmap\r\n\ \r\n\ @param\ difficulty\ -\ the\ difficulty\ selected\r\n\ @return\ HashMap\ -\ the\ hashmap\ for\ the\ desired\ difficulty\r\n
 numComments=4

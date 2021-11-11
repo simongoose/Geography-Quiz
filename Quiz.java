@@ -22,16 +22,17 @@ public class Quiz
         new HashMap<Integer, String>();  // the answer key
         
     private double diff;    // difficulty of the quiz
-    private double[] difficulties = {1, 2, 3, 4};  // stores the 4 values of difficulties as indexes
+    // stores the 4 values of difficulties as indexes
+    private double[] difficulties = {1, 2, 3, 4};  
     
     private String currentCountry;  // stores the current country
     private String currentCapital;  // stores the current capital
-    private String otherCountry;   // stores the other country as an answer option
-    private String otherCapital;   // stores the other capital as an answer option
+    private String otherCountry;   // stores other country as answer option
+    private String otherCapital;   // stores other capital as answer option
     private String answering;      // what is currently being answered
     
     private String[] otherAnswers;  // stores the other possible answers
-    private String[] otherCountryAnswers;  // stores the other possible country answers
+    private String[] otherCountryAnswers;  // stores other country answers
     private ArrayList<String> countries;     // stores all countries
     
     private int amtLeft;    // the amount of questions left to be asked
@@ -63,7 +64,7 @@ public class Quiz
     /**
      * Select the hashmap based on the difficulty
      * 
-     * @return HashMap of the questions for the round
+     * @param difficulty - the selected difficulty
      */
     public void getQs(double difficulty) {
         // reset the question and answer key information for the new round
@@ -89,12 +90,16 @@ public class Quiz
     
     /**
      * Chooses the mode
+     * 
+     * @param answerCap - boolean for the mode
+     * @return answerCap - boolean for the mode
      */
     public boolean mode(boolean answerCap) {
         // switch the mode
         if (answerCap == true) {
             answerCap = false;
-        } else if (answerCap == false) {
+        } 
+        else if (answerCap == false) {
             answerCap = true;
         }
         
@@ -102,7 +107,8 @@ public class Quiz
         this.answeringCap = answerCap;
         if (answerCap == true) {
             answering = "Country to Capital";
-        } else if (answerCap == false) {
+        } 
+        else if (answerCap == false) {
             answering = "Capital to Country";
         }
         
@@ -114,12 +120,14 @@ public class Quiz
      * Chooses the question from the selected hashmap
      */
     public void chooseQuestion() {
-        int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
+        // randomly choose the question
+        int choiceIdx = (int) (Math.random() * amt);  
         
         // check if index has already been used
         if (amtLeft != 0) {
-            while ((askedQuestions.containsKey(countries.get(choiceIdx)))){
-                choiceIdx = (int) (Math.random() * amt);  // randomly choose the question again
+            while ((askedQuestions.containsKey(countries.get(choiceIdx)))) {
+                // randomly choose the question again
+                choiceIdx = (int) (Math.random() * amt);  
             }
         }
         
@@ -127,35 +135,43 @@ public class Quiz
         amtLeft--;
         correctIdx = choiceIdx;
         
-        // store values
-        currentCountry = countries.get(choiceIdx);   // choose the random country
-        currentCapital = questions.get(currentCountry);  // get the capital of the chosen country
-        askedQuestions.put(currentCountry, currentCapital); // add them to the asked questions hashmap
+        // store values of selected country and capital
+        currentCountry = countries.get(choiceIdx);   
+        currentCapital = questions.get(currentCountry); 
+        askedQuestions.put(currentCountry, currentCapital); 
     }
     
     /**
      * Set the difficulty
+     * 
+     * @param diffIdx - user selected difficulty
+     * @return boolean - if difficulty is valid
      */
     public boolean setDifficulty(double diffIdx) {
-        if (diffIdx == difficulties[0]){
+        if (diffIdx == difficulties[0]) {
             diff = diffIdx;
             return false;
-        } else if (diffIdx == difficulties[1]){
+        } 
+        else if (diffIdx == difficulties[1]) {
             diff = diffIdx;
             return false;
-        } else if (diffIdx == difficulties[2]){
+        } 
+        else if (diffIdx == difficulties[2]) {
             diff = diffIdx;
             return false;
-        } else if (diffIdx == difficulties[3]){
+        } 
+        else if (diffIdx == difficulties[3]) {
             diff = diffIdx;
             return false;
-        } else {
+        } 
+        else {
             return true;
         }
     }
     
     /**
      * Return country
+     * @return currentCountry - the selected country
      */
     public String getCountry() {
         return currentCountry;
@@ -163,6 +179,7 @@ public class Quiz
     
     /**
      * Return capital
+     * @return currentCapital - the selected capital
      */
     public String getCapital() {
         return currentCapital;
@@ -170,6 +187,7 @@ public class Quiz
     
     /**
      * Return multichoice answers
+     * @return answerKey - key to answers
      */
     public HashMap getAnswers() {
         return answerKey;
@@ -177,6 +195,7 @@ public class Quiz
     
     /**
      * Return amount of questions
+     * @return amtLeft - number of questions left
      */
     public int getAmount() {
         return amtLeft;
@@ -184,6 +203,7 @@ public class Quiz
     
     /**
      * Return lives
+     * @return lives - number of user lives
      */
     public int getLives() {
         return lives;
@@ -191,6 +211,7 @@ public class Quiz
     
     /**
      * Return score
+     * @return score - user score
      */
     public int getScore() {
         return score;
@@ -212,19 +233,26 @@ public class Quiz
         
         // run this code 3 times to get 3 other answers
         for (int i = 0; i < OTHERAMT; i++) {
-            int choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
+             // randomly choose the question
+            int choiceIdx = (int) (Math.random() * amt); 
 
-            while (Arrays.asList(otherAnswers).contains(questions.get(countries.get(choiceIdx))) || countries.get(choiceIdx).equalsIgnoreCase(currentCountry) || 
-            Arrays.asList(otherAnswers).contains(countries.get(choiceIdx))) {
-                choiceIdx = (int) (Math.random() * amt);  // randomly choose the question
+            while (Arrays.asList(otherAnswers).contains(questions.get
+                (countries.get(choiceIdx))) || countries.get(choiceIdx).equals
+                    (currentCountry) || Arrays.asList
+                    (otherAnswers).contains(countries.get(choiceIdx))) {
+                // randomly choose the question
+                choiceIdx = (int) (Math.random() * amt);  
             }
-            otherCountry = countries.get(choiceIdx);   // choose the random country
-            otherCapital = questions.get(otherCountry);  // get the capital of the chosen country
+            
+            // get country and capital
+            otherCountry = countries.get(choiceIdx);  
+            otherCapital = questions.get(otherCountry);  
             
             // add other options to hashmap for current question
             if (answeringCap == true) {
                 otherAnswers[answerIdx] = otherCapital;
-            } else if (answeringCap == false) {
+            } 
+            else if (answeringCap == false) {
                 otherAnswers[answerIdx] = otherCountry;
             }
             // increment answerIdx
@@ -239,19 +267,27 @@ public class Quiz
     public void assignAnswerKey() {
         int answerIdx = 0;
         
+        
+        // random number between 1 and 4
+        currentAnswerKey = (int) (Math.random() * FULLKEY); 
         // add the current capital to the answer key
-        currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
         if (answeringCap == true) {
             answerKey.put(currentAnswerKey, currentCapital);
-        } else if (answeringCap == false) {
+        } 
+        else if (answeringCap == false) {
             answerKey.put(currentAnswerKey, currentCountry);
         }
-        correctAnswerKey = currentAnswerKey;    // get the correct answer and its key
+        // get the correct answer and its key
+        correctAnswerKey = currentAnswerKey;  
         
         // run as long as hashmap isnt full
         while (answerKey.size() < FULLKEY) {
-            currentAnswerKey = (int) (Math.random() * FULLKEY); // random number between 1 and 4
-            if (!answerKey.containsKey(currentAnswerKey) && answerIdx < OTHERAMT) {
+             // random number between 1 and 4
+            currentAnswerKey = (int) (Math.random() * FULLKEY);
+            
+            // fill answer key
+            if (!answerKey.containsKey(currentAnswerKey) && 
+                answerIdx < OTHERAMT) {
                 answerKey.put(currentAnswerKey, otherAnswers[answerIdx]);
                 answerIdx++;
             }
@@ -260,6 +296,9 @@ public class Quiz
     
     /**
      * Calculates user score and lives
+     * 
+     * @param userAnswer - user answer as idx
+     * @return boolean - if correct or not
      */
     public boolean scoreCalculator(int userAnswer) {
         // check if users answer is correct or not
@@ -267,7 +306,8 @@ public class Quiz
             // if correct add 1 to score and return true
             score++;
             return true;
-        } else {
+        } 
+        else {
             // if wrong take 1 life and return false
             lives--;
             return false;
